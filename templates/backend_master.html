@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>后台管理布局：冻结顶部导航与左部菜单栏，只是内容滚动</title>
+  <link rel="stylesheet" href="/static/plugins/font-awesome/css/font-awesome.css">
+  <style>
+    body{
+        margin:0;
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        font-size: 14px;
+    }
+    .pg-header{
+      height: 48px;
+      line-height: 48px;
+      background-color: #2F72AB;
+      color:white;
+    }
+    .pg-header a{
+        color:white;
+        text-decoration: none !important;
+    }
+    .blog_index{
+        font-size: 13px;
+    }
+    .user-menu{
+        font-size: 12px;
+    }
+    .user-menu a{
+        display: inline-block;
+        height: 48px;
+        padding: 0 8px;
+        margin-left: -3px;
+    }
+    .blog_index:hover,.user-menu a:hover{
+        background-color:#337ab7;
+    }
+    .float_left{
+      float:left;
+    }
+    .float_right{
+        float:right;
+    }
+    .hide{
+        display: none;
+    }
+    .logo{
+        font-size:30px;
+        font-weight: bold;
+        text-align: center;
+        background-color: #1c5a9c;
+        padding: auto;
+        width: 200px;
+    }
+    .blog_index{
+        padding:0 15px;
+
+    }
+    .badge_new {
+        display: inline-block;
+        min-width: 10px;
+        padding: 3px 5px;
+        font-size: 12px;
+        font-weight: bold;
+        min-height: 10px;
+        line-height: 1;
+        color: #fff;
+        text-align: center;
+        white-space: nowrap;
+        vertical-align: baseline;
+        background-color: #777;
+        border-radius: 15px;
+    }
+    .bg-success_new{
+        background-color: #5cb85c;
+    }
+    .bg-danger_new{
+        background-color: #d9534f;
+    }
+    .avatar{
+        position: relative;
+        padding-right: 30px;
+        padding-left: 10px;
+        margin-left: -10px;
+    }
+    .user-more{
+        position: absolute;
+        top:48px;
+        left:-65px;
+        width: 142px;
+        background-color: white;
+        z-index: 99;
+    }
+    .user-more a{
+        display: block;
+        color:black;
+        margin: 0;
+        padding-left: 20px !important;
+        height:30px !important;
+        line-height: 30px;
+        text-decoration: none !important;
+    }
+    .user-more a:hover{
+        background-color: #dddddd;
+    }
+    .avatar a{
+        height: 48px;
+        padding: 0 8px;
+    }
+    .img-circle{
+        border-radius: 50%;
+        vertical-align: middle;
+    }
+    .pg-content a{
+        color:#428bca;
+    }
+    .pg-content .menu{
+      position: absolute;
+      top:49px;
+      bottom:0;
+      left:0;
+      width: 200px;
+      border:1px solid #dddddd;
+    }
+    .pg-content .menu a {
+        display: block;
+        text-decoration: none;
+        padding: 8px 8px;
+        border-bottom: 1px dashed #dddddd;
+
+    }
+    .pg-content a:hover{
+        color:#2a6496;
+    }
+    .pg-content .content{
+      position: absolute;
+      top:49px;
+      bottom:0;
+      left:205px;
+      right:0;
+      border:1px solid #dddddd;
+      overflow: auto
+    }
+    .pg-content .content .breadcrumb{
+        background-color: #f5f5f5;
+        border-radius: 4px;
+        padding: 8px 15px;
+        border-bottom: 1px dashed #dddddd;
+    }
+    .pg-content .content .breadcrumb a{
+        text-decoration: none;
+    }
+      .pg-content .content .breadcrumb>a + a:before{
+          padding: 0 5px;
+          color:#ccc;
+          content: "/\00a0";
+      }
+    .pg-content .content .breadcrumb .active{
+       color:#777;
+    }
+    {% block style_more %}
+    {% endblock %}
+  </style>
+
+    {% block css %}
+    {% endblock %}
+</head>
+<body>
+  <div class="pg-header">
+      <div class="logo float_left">
+          <a href="#">EasyStack</a>
+      </div>
+      <div class="blog_index float_left">
+          <a href="#">博客首页</a>
+      </div>
+      <div class="user-menu float_right">
+          <a href="#">
+              任务
+              <i class="fa fa-bell-o" aria-hidden="true"></i>
+              <span class="badge_new bg-danger_new">4</span>
+          </a>
+          <a href="#">
+              通知
+              <i class="fa fa-envelope-o" aria-hidden="true"></i>
+              <span class="badge_new bg-success_new">2</span>
+          </a>
+          <a href="#">
+              消息
+              <i class="fa fa-commenting-o" aria-hidden="true"></i>
+              <span class="badge_new bg-success_new">2</span>
+          </a>
+          <div class="avatar float_right">
+              <a id="avatar_id">
+                  <img class="img-circle" src="/static/imgs/avatar/default.png">
+              </a>
+              <div class="user-more hide">
+                  <a href="#">个人信息</a>
+                  <a href="#">退出</a>
+              </div>
+          </div>
+      </div>
+      <div style="clear: both"></div>
+  </div>
+  <div class="pg-content">
+    <div class="menu">
+        <a class="menu-item" href="/backend/article-0-0/">
+            <i class="fa fa-cogs" aria-hidden="true"></i>
+            <span>文章管理</span>
+        </a>
+        <a class="menu-item" href="/backend/category/">
+            <i class="fa fa-cogs" aria-hidden="true"></i>
+            <span>分类管理</span>
+        </a>
+                <a class="menu-item" href="/backend/tag/">
+            <i class="fa fa-cogs" aria-hidden="true"></i>
+            <span>标签管理</span>
+        </a>
+        <a class="menu-item" href="/backend/base-info/">
+            <i class="fa fa-cogs" aria-hidden="true"></i>
+            <span>个人信息</span>
+        </a>
+    </div>
+    <div class="content">
+        {% block breadcrumb %}
+        {% endblock %}
+        {% block content %}
+        {% endblock %}
+
+    </div>
+  </div>
+    <script src="/static/js/jquery-1.12.4.js"></script>
+    {% block js %}
+    {% endblock %}
+    <script>
+        $(".avatar").mouseover(function () {
+            $(this).children().eq(1).removeClass("hide");
+        });
+        $(".avatar").mouseout(function(){
+            $(this).children().eq(1).addClass("hide");
+
+        });
+    </script>
+</body>
+</html>

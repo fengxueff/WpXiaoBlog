@@ -1,0 +1,134 @@
+{% extends "master.html" %}
+
+
+{% block title %}index页面{% endblock %}
+{% block css %}
+    <link rel="stylesheet" href="/static/plugins/font-awesome/css/font-awesome.css">
+    <style>
+        .page_content{
+            background-color: #ffffff;
+            min-height: 100px;
+            width: 63%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .article_list{
+            float: left;
+            width:70%;
+            margin-right:0;
+        }
+        .article_widgets{
+            margin-left: 0;
+            float: right;
+            width:29.6%;
+            min-height: 100px;
+            border: 1px solid blue;
+        }
+        .article-item{
+            font-size: 13px;
+            padding: 5px 0;
+            border-bottom: 1px dashed #dddddd;
+        }
+        .article-item h3{
+            font-size: 20px;
+            margin: 10px 0;
+        }
+        .article-item .clearfix img{
+            height:70px;weight:70px;
+        }
+        .article-item a{
+            color:#428bca;
+            text-decoration: none;
+        }
+        .article-item a:hover{
+            text-decoration: underline;
+        }
+
+        .clearfix img{
+            float: left;
+        }
+        .article-footer{
+            margin-top: 5px;
+        }
+        .article-footer a i:hover{
+            text-decoration: underline;
+        }
+        .article-chat,article-up{
+            display: inline-block;
+            margin: 0 20px;
+        }
+        .clearfix .pagination {
+            padding-left: 0;
+        }
+        .clearfix .pagination li{
+            float: left;
+            list-style: none;
+            padding-left:0px;
+            padding: 0;
+            margin: 0;
+        }
+        .pagination a{
+            padding:6px 12px;
+            border: 1px solid #ddd;
+            /*加上line-height就能使上一页下一页与数字页的标签按钮对齐*/
+            line-height: 5px;
+            text-decoration: none;
+            color:black;
+        }
+
+        .pagination .active{
+            background-color: #428bca;
+            color: white;
+            margin: -1px;
+        }
+        .pagination .prev-page{
+            border-top-left-radius: 4px;
+            border-bottom-left-radius: 4px;
+            color:#428bca;
+        }
+        .pagination .next-page{
+            border-top-right-radius: 4px;
+            border-bottom-right-radius: 4px;
+            color:#428bca;
+        }
+        .pagination .prev-page:hover,.next-page:hover{
+            background-color: #dddddd;
+            color: #6FA5DB;
+        }
+
+    </style>
+{% endblock %}
+{% block content %}
+    <div class="page_content">
+        <div class="article_list">
+            {%  for row in article_list %}
+            <div class="article-item">
+                <h3><a href="/article_show/{{ request.session.user_info.blog__site }}/{{ row.nid }}/">{{ row.title }}</a></h3>
+                <div class="clearfix">
+                    <img src="/static/imgs/avatar/20130809170025.png">
+                    {{ row.summary }}
+
+                </div>
+                <div style="clear: both;"></div>
+                <div class="article-footer">
+                    <a class="article-home" href="#"><i class="fa fa-user-o" aria-hidden="true">&nbsp;昵称</i></a>
+                    <span>发布于{{ row.create_time }}</span>
+                    <a class="article-chat" href="#"><i class="fa fa-commenting-o" aria-hidden="true">&nbsp;0</i></a>
+                    <a class="article-up" href="#"><i class="fa fa-thumbs-o-up" aria-hidden="true">&nbsp;0</i></a>
+                </div>
+            </div>
+            {% endfor %}
+            <div class="clearfix">
+
+                <ul class="pagination">
+                    {{ page_str }}
+                </ul>
+            </div>
+        </div>
+        <div class="article_widgets">
+            <div class="hot-recommend"></div>
+            <div class="hot-comment"></div>
+        </div>
+        <div style="clear: both"></div>
+    </div>
+{% endblock %}

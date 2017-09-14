@@ -1,0 +1,33 @@
+    <div class="page-header">
+        <div class="header-content">
+            <div class="header-left">
+                <a style="font-size: 18px;color:#777;">老子的技术论坛</a>
+                {% if article_type_id %}
+                    <a href="/">全部</a>
+                {% else %}
+                    <a class="active" href="/">全部</a>
+                {% endif %}
+                {% for row in article_type_list %}
+                    {% if article_type_id == row.0 %}
+                        <a class="active" href="/all/{{ row.0}}/">{{ row.1}}<a>
+                    {% else %}
+                        <a href="/all/{{ row.0}}/">{{ row.1 }}</a>
+                    {% endif %}
+
+                {% endfor %}
+            </div>
+            <div class="header-right">
+                {% if request.session.user_info %}
+                    <a href="/backend/index/">{{ request.session.user_info.nickname }}</a>
+                    <a href="/article_add/">添加博客</a>
+                    <a href="/{{ request.session.user_info.blog__site }}/">我的博客</a>
+                    <a href="/backend/index/">管理</a>
+                    <a href="/logout/">退出</a>
+                {% else %}
+                    <a href="/login/">登录</a>
+                    <a href="/register/">注册</a>
+                {% endif %}
+            </div>
+            <div style="clear: both;"></div>
+        </div>
+    </div>

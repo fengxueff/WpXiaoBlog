@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/static/plugins/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="/static/plugins/font-awesome/css/font-awesome.css">
+    <style>
+        .login{
+            border:1px solid #dddddd;
+            width: 400px;
+            margin-top: 50px;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 10px 30px 50px 30px;
+            box-shadow: 5px 10px 10px rgba(0, 0, 0, .05)
+        }
+        .login_title{
+            font-size: 25px;
+            font-weight: bold;
+            text-align: center;
+        }
+        .right{
+            float: right;
+        }
+        .alert {
+            padding: 6px;
+            margin-bottom: 0;
+        }
+        .hide{
+            display: none;
+        }
+    </style>
+</head>
+<body style="margin: 0">
+    <div class="login">
+        <div class="login_title">用户登录</div>
+        <form id="fm" method="POST" action="/login.html">
+            {% csrf_token %}
+            <div class="form-group">
+                <label>用户名</label>
+                <input type="text" class="form-control" id="username" name="username" placeholder="请输入用户名">
+            </div>
+            <div class="form-group">
+                <label>密码</label>
+                <input type="text" class="form-control" id="password" name="password" placeholder="请输入密码">
+            </div>
+            <div class="form-group">
+                <label>验证码</label>
+                <div class="row">
+                    <div class="col-xs-7">
+                        <input type="text" class="form-control" id="check_code" name="check_code" placeholder="请输入验证码">
+                    </div>
+                    <div class="col-xs-5">
+                        <img id="check_code_img" src="/check_code">
+                    </div>
+                </div>
+            </div>
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" value="1" name="rmb">一个月自动登录
+                </label>
+                <div class="right">
+                    <a href="#" >忘记密码？</a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-3">
+                    <a id="submit" class="btn btn-default">登录</a>
+                </div>
+                <div class="col-xs-9" style="padding-left:0;padding-bottom:0 ">
+                    <div class="alert alert-danger hide">
+                        <span style="display: inline-block;font-size: 14px;padding: 0 5px 0 5px;">
+                            <i class="fa fa-minus-circle" aria-hidden="false"></i>
+                        </span>
+                        <span id="error_msg" style="font-size:12px;">dasf</span>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <script src="/static/js/jquery-1.12.4.js"></script>
+    <script>
+        $(function () {
+            bindLogin();
+        });
+        function bindLogin() {
+            $('#submit').click(function () {
+                var $msg = $('#error_msg');
+                $msg.parent().addClass('hide');
+                $.ajax({
+                    url: '/login/',
+                    type: 'POST',
+                    data: $('#fm').serialize(),
+                    dataType: 'JSON',
+                    success: function (arg) {
+                        if(arg.status){
+                            location.href = '/'
+                        }else{
+                            $msg.parent().removeClass('hide');
+                            $msg.text(arg.message);
+                            var img = $('#check_code_img')[0];
+                            img.src = img.src + '?';
+                            $('#password,#check_code').val('');
+                        }
+
+                    }
+                })
+
+            })
+        }
+    </script>
+</body>
+</html>

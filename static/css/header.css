@@ -1,0 +1,39 @@
+        .page-header{
+            background-color: #f8f8f8;
+            min-height: 50px;
+            line-height: 50px;
+            border: 1px solid #e7e7e7;
+
+        }
+        .header-content{
+            min-width: 600px;
+            width: 63%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .header-content a{
+            display: inline-block;
+            padding-right:10px;
+            padding-left:10px;
+            /*去除inline-block之间的间距*/
+            margin-right: -4px;
+            /*color: black;*/
+            /*opacity: 0.6;*/
+            font-size: 14px;
+            text-decoration: none;
+            color:#555;
+        }
+        .header-content a:hover{
+            cursor: pointer;
+            color:black;
+        }
+        .active{
+            background-color: #e7e7e7;
+        }
+
+        .header-left{
+            float: left;
+        }
+        .header-right{
+            float:right;
+        }

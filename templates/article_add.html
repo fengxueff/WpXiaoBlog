@@ -1,0 +1,111 @@
+{% extends "backend_master.html" %}
+{% block css %}
+   <link rel="stylesheet" href="/static/plugins/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="/static/plugins/kindeditor/themes/default/default.css"/>
+    <link type="text/css" rel="stylesheet" href="/static/plugins/kindeditor/plugins/code/prettify.css"/>
+{% endblock %}
+{% block style_more %}
+    .article_add{
+        padding:5px 8px;
+
+    }
+{% endblock %}
+{% block breadcrumb %}
+    <div class="breadcrumb">
+        <a href="#">文章管理</a>
+        <a href="#" class="active">添加文章</a>
+    </div>
+{% endblock %}
+{% block content %}
+    <div class="article_add" >
+        <form action="/article_add/" method="post" novalidate>
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="{{ articleForm.title.id_for_label }}">标题<span>{{ articleForm.errors.title.0 }}</span></label>
+                <!--<input type="text" name="title" class="form-control" placeholder="文章标题" id="id_title">-->
+                {{ articleForm.title }}
+            </div>
+            <div class="form-group">
+                <label for="{{ articleForm.summary.id_for_label }}">简介<span>{{ articleForm.errors.summary.0 }}</span></label>
+                <!--<textarea name="summary" cols="40" rows="3" class="form-control" placeholder="文章简介" id="id_summary"></textarea>-->
+                {{ articleForm.summary }}
+            </div>
+            <div class="form-group">
+                <label for={{ articleForm.content.id_for_label }}>内容<span>{{ articleForm.errors.content.0 }}</span></label>
+                <!--<textarea name="content" cols="40" rows="20" class="kind-content" id="id_content"></textarea>-->
+                {{ articleForm.content }}
+            </div>
+            <div class="form-group">
+                <label>类型 <span>{{ articleForm.errors.article_type_id.0 }}</span></label>
+                    <div>
+                        <!--
+                        <ul id="id_article_type_id">
+                            <li>
+                                <label for="id_article_type_id_0">
+                                    <input type="radio" name="article_type_id" value="1" required="" id="id_article_type_id_0">Python
+                                </label>
+                            </li>
+                            <li>
+                                <label for="id_article_type_id_1">
+                                    <input type="radio" name="article_type_id" value="2" required="" id="id_article_type_id_1">Linux
+                                </label>
+                            </li>
+                            <li>
+                                <label for="id_article_type_id_2">
+                                    <input type="radio" name="article_type_id" value="3" required="" id="id_article_type_id_2">OpenStack
+                                </label>
+                            </li>
+                            <li>
+                                <label for="id_article_type_id_3">
+                                    <input type="radio" name="article_type_id" value="4" required="" id="id_article_type_id_3">GoLang
+                                </label>
+                            </li>
+                        </ul>
+                        -->
+                        {{ articleForm.article_type_id }}
+                    </div>
+            </div>
+            <div class="form-group">
+                <label>分类<span>{{ articleForm.errors.category_id.0 }}</span></label>
+                <div>
+                    {{ articleForm.category_id }}
+                </div>
+            </div>
+            <div class="form-group">
+                <label>分类<span>{{ articleForm.errors.tags.0 }}</span></label>
+                {{ articleForm.tags }}
+            </div>
+             <div class="form-group">
+                <input type="submit" value="保 存">
+            </div>
+
+        </form>
+    </div>
+
+{% endblock %}
+
+{% block js %}
+
+    <script charset="utf-8" src="/static/plugins/kindeditor/kindeditor.js"></script>
+    <script charset="utf-8" src="/static/plugins/kindeditor/lang/zh_CN.js"></script>
+    <script charset="utf-8" src="/static/plugins/kindeditor/plugins/code/prettify.js"></script>
+    <script charset="utf-8" src="/static/plugins/kindeditor/plugins/autoheight/autoheight.js"></script>
+    <script>
+        KindEditor.ready(function (K) {
+            var editor = K.create('textarea[name="content"]', {
+                width:"100%",
+                autoHeightMode:true,
+                resizeType: 1,
+                cssPath :[ '/static/plugins/kindeditor/plugins/code/prettify.css'],
+                uploadJson: '/upload_img/',
+                extraFileUploadParams: {
+                    'csrfmiddlewaretoken': '{{ csrf_token }}'
+                },
+                fileManagerJson: '/file_manager/',
+                allowPreviewEmoticons: true,
+                allowImageUpload: true
+            });
+        });
+        prettyPrint();
+    </script>
+{% endblock %}

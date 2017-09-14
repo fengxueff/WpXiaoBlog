@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        body{
+            margin: 0;
+        }
+        .page-header{
+            background-color: #f8f8f8;
+            min-height: 50px;
+            line-height: 50px;
+            border: 1px solid #e7e7e7;
+
+        }
+        .header-content{
+            min-width: 600px;
+            width: 63%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .header-content a{
+            display: inline-block;
+            padding-right:10px;
+            padding-left:10px;
+            /*去除inline-block之间的间距*/
+            margin-right: -4px;
+            /*color: black;*/
+            /*opacity: 0.6;*/
+            font-size: 14px;
+            text-decoration: none;
+            color:#555;
+        }
+        .header-content a:hover{
+            cursor: pointer;
+            color:black;
+        }
+        .active{
+            background-color: #e7e7e7;
+        }
+
+        .header-left{
+            float: left;
+        }
+        .header-right{
+            float:right;
+        }
+    </style>
+</head>
+<body>
+    <div class="page-header">
+        <div class="header-content">
+            <div class="header-left">
+                <a style="font-size: 18px;color:#777;">老子的技术论坛</a>
+                <a>全部</a>
+                <a>Python</a>
+                <a>Linux</a>
+                <a>OpenStack</a>
+                <a>GoLang</a>
+            </div>
+            <div class="header-right">
+                <a>登录</a>
+                <a>注册</a>
+                <a>肖文鹏</a>
+                <a>我的博客</a>
+                <a>管理</a>
+                <a>退出</a>
+            </div>
+            <div style="clear: both;"></div>
+        </div>
+    </div>
+</body>
+</html>
